@@ -66,12 +66,12 @@ function Player:update(dt)
     self.position = self.position + move
     if camera.position.y == 0 and self.position.y < (love.graphics.getHeight() - self.size.y) / 2 then
     else
-        camera.position.y = camera.position.y + move.y
+        camera.position.y = math.max(camera.position.y + move.y, 0)
     end
 
     if camera.position.x == 0 and self.position.x < (love.graphics.getWidth() - self.size.x) / 2 then
     else
-        camera.position.x = camera.position.x + move.x
+        camera.position.x = math.max(camera.position.x + move.x, 0)
     end
 
     self.collider:moveTo(self.position.x + self.size.x, self.position.y)
@@ -79,7 +79,7 @@ function Player:update(dt)
     if self.control:isFiring() and not self.hasShot then
         local angle = self.control:getFireAngle(self.position)
 
-        self.weapon:spawn(self:getCenterPosition(), angle)
+        self.weapon:spawn(self.position, angle)
 
         self.hasShot = true
     end

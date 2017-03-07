@@ -72,8 +72,13 @@ function Map:update(dt)
 end
 
 function Map:draw()
-    for y=0,self.tilemap.height-1 do
-        for x=0,self.tilemap.width-1 do
+    local startX = math.floor(camera.position.x / self.tilemap.tilewidth)
+    local startY = math.floor(camera.position.y / self.tilemap.tileheight)
+    local endX = math.min(startX + (math.ceil(love.graphics.getWidth() / self.tilemap.tilewidth)), self.tilemap.width - 1)
+    local endY = math.min(startY + (math.ceil(love.graphics.getHeight() / self.tilemap.tileheight)), self.tilemap.height - 1)
+
+    for y=startY,endY do
+        for x=startX,endX do
             local coord = Vector(x, y)
             local tile = self:getTileForCoord(coord)
 

@@ -1,6 +1,7 @@
 Projectile = Class{}
 
 function Projectile:init(from, angle)
+    self.from = from:clone()
     self.position = from:clone()
     self.cameraPosition = camera.position:clone()
     self.angle = angle
@@ -19,4 +20,5 @@ function Projectile:draw()
     love.graphics.setColor(255, 0, 0)
     local drawPos = self.position - self.cameraPosition
     love.graphics.circle("line", drawPos.x, drawPos.y, 5)
+    love.graphics.circle("fill", self.from.x - self.cameraPosition.x, self.from.y - self.cameraPosition.y, 5)
 end
