@@ -30,8 +30,6 @@ function MultiShot:spawn(position, angle)
         projectileAngle = projectileAngle + (math.rad(self.spread) * 0.5)
         projectileAngle = projectileAngle + (math.rad(self.spread) * (i - 1))
 
-        print(i, angle, projectileAngle)
-
         table.insert(self.projectiles, Projectile(position, projectileAngle))
     end
 end

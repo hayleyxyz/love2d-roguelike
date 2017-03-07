@@ -43,34 +43,35 @@ function Player:update(dt)
     for shape, delta in pairs(HC.collisions(self.collider)) do
         if shape.tag == 'wall' then
             hasWallCollided = true
-            print(string.format("Colliding. Separating vector = (%s,%s)", delta.x, delta.y))
 
             if delta.x > 0 then
               collisions.left = true
+              move.x = move.x + delta.x
             elseif delta.x < 0 then
               collisions.right = true
+              move.x = move.x + delta.x
             end
 
             if delta.y > 0 then
               collisions.top = true
+              move.y = move.y + delta.y
             elseif delta.y < 0 then
               collisions.bottom = true
+              local oldY = move.y
+              move.y = move.y + delta.y
             end
         end
     end
 
-    if collisions.top or collisions.bottom then
-        move.y = 0
-    end
-
-    if collisions.left or collisions.right then
-        move.x = 0
-    end
-
     self.position = self.position + move
-    if camera.position.y == 0 and self.position.y < (love.graphics.getWidth() - self.size.x) / 2 then
+    if camera.position.y == 0 and self.position.y < (love.graphics.getHeight() - self.size.y) / 2 then
     else
-        camera.position = camera.position + move
+        camera.position.y = camera.position.y + move.y
+    end
+
+    if camera.position.x == 0 and self.position.x < (love.graphics.getWidth() - self.size.x) / 2 then
+    else
+        camera.position.x = camera.position.x + move.x
     end
 
     self.collider:moveTo(self.position.x + self.size.x, self.position.y)
