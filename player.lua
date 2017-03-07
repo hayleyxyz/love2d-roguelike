@@ -12,7 +12,7 @@ function Player:init(index)
     self.rotation = 0
 
     self.control = PlayerControl(index)
-    self.speed = 200
+    self.speed = 400
 
     self.shooting = false
     self.weapon = MultiShot(3)

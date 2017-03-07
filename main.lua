@@ -18,9 +18,9 @@ function love.load()
 
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
+    map = Map()
     camera = Camera()
-
-    map = Map(Vector(64, 64))
+    camera.bounds = Vector(map:getPixelWidth(), map:getPixelHeight())
 
     --table.insert(
     --    players,

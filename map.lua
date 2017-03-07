@@ -35,6 +35,14 @@ function Map:init()
     end
 end
 
+function Map:getPixelWidth()
+  return self.tilemap.width * self.tilemap.tilewidth
+end
+
+function Map:getPixelHeight()
+  return self.tilemap.height * self.tilemap.tileheight
+end
+
 function Map:getLayer(type, name)
     for i,layer in ipairs(self.tilemap.layers) do
         if layer.name == name and layer.type == type then
