@@ -36,7 +36,7 @@ function Player:update(dt)
     local newPosition = self.position + move
 
     --self.collider:moveTo(newPosition.x - camera.position.x, newPosition.y - camera.position.y)
-    self.collider:moveTo(newPosition.x + self.size.x, newPosition.y)
+    self.collider:moveTo(newPosition.x + (self.size.x / 2), newPosition.y + (self.size.y / 2))
 
     local hasWallCollided = false
     local collisions = { top = false, right = false, bottom = false, left = false }
@@ -74,12 +74,14 @@ function Player:update(dt)
         camera.position.x = math.max(camera.position.x + move.x, 0)
     end
 
-    self.collider:moveTo(self.position.x + self.size.x, self.position.y)
+    self.collider:moveTo(self.position.x + (self.size.x / 2), self.position.y + (self.size.y / 2))
 
     if self.control:isFiring() and not self.hasShot then
-        local angle = self.control:getFireAngle(self.position)
+        local firePosition = self:getCenterPosition() + Vector(0, self.size.y)
 
-        self.weapon:spawn(self.position, angle)
+        local angle = self.control:getFireAngle(firePosition)
+
+        self.weapon:spawn(firePosition, angle)
 
         self.hasShot = true
     end
@@ -97,9 +99,10 @@ function Player:draw()
     love.graphics.setColor(255, 255, 255)
     --quad = love.graphics.newQuad(0, 0, 32, 32, self.sprite:getDimensions())
     --love.graphics.draw(self.sprite, quad, self.position.x, self.position.y, 0, 1, 1, 0, 32)
-    local drawPos = self:getCenterPosition()
+    local drawPos = self.position
 
     drawPos = drawPos - camera.position
 
     love.graphics.draw(self.sprite, drawPos.x, drawPos.y)
+    love.graphics.circle("fill", self:getCenterPosition().x - camera.position.x, (self:getCenterPosition().y - camera.position.y) + self.size.y, 5)
 end

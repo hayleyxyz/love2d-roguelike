@@ -59,6 +59,6 @@ function love.draw()
 
     love.graphics.setColor(0, 255, 0, 100)
     for i,v in pairs(HC:hash():shapes()) do
-        --v:draw('fill')
+      --v:draw('fill')
     end
 end
